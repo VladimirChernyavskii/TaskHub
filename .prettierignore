@@ -1,0 +1,20 @@
+# Build outputs
+build
+dist
+storybook-static
+
+# Dependencies
+node_modules
+.yarn
+
+# Package manager files
+package-lock.json
+yarn.lock
+
+# Logs
+*.log
+
+# Configs and system folders
+webpack/
+.storybook
+.husky
