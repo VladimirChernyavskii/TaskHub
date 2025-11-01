@@ -1,0 +1,16 @@
+.container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--secondary-color);
+    transition: background-color 0.2s ease;
+}
+
+.container:hover {
+    background-color: rgb(0 0 0 / 3%);
+}
+
+.actions{
+    display: flex;
+    gap: 10px;
+}
