@@ -1,76 +1,76 @@
 @mixin typography($size: 18, $weight: 400, $family: 'Open Sans') {
-	color: var(--text-color);
-	font-weight: $weight;
-	font-size: $size;
-	font-family: $family;
-	line-height: normal;
-	letter-spacing: 0;
+  color: var(--text-color);
+  font-weight: $weight;
+  font-size: $size;
+  font-family: $family;
+  line-height: normal;
+  letter-spacing: 0;
 }
 
 .text {
-	@include typography(18, 400, 'Open Sans');
+  @include typography(18, 400, 'Open Sans');
 
-	overflow-wrap: anywhere;
+  overflow-wrap: anywhere;
 }
 
 .left {
-	text-align: left;
+  text-align: left;
 }
 
 .center {
-	text-align: center;
+  text-align: center;
 }
 
 .uppercase {
-	text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .size12 {
-	font-size: 12px;
+  font-size: 12px;
 }
 
 .size18 {
-	font-size: 18px;
+  font-size: 18px;
 }
 
 .size22 {
-	font-size: 22px;
+  font-size: 22px;
 }
 
 .size25 {
-	font-size: 25px;
+  font-size: 25px;
 }
 
 .size31 {
-	font-size: 31px;
+  font-size: 31px;
 }
 
 .weight400 {
-	font-weight: 400;
+  font-weight: 400;
 }
 
 .weight800 {
-	font-weight: 800;
+  font-weight: 800;
 }
 
 .normal {
-	font-style: normal;
+  font-style: normal;
 }
 
 .italic {
-	font-style: italic;
+  font-style: italic;
 }
 
 .none {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 .line-through {
-	text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 // для динамических типографий, используем константы, которые будут меняться
 
 .dynamic {
-	color: var(--text-color);
+  color: var(--text-color);
 }
