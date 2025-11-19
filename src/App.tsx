@@ -19,6 +19,18 @@ export const App = () => {
     { id: 4, text: 'Помыть попу', completed: false },
   ]);
 
+  const deleteTask =(id:number) =>{
+    setTasks(prev => prev.filter(task => task.id !== id))
+  }
+
+  const toggleComplete =(id:number) =>{
+    setTasks(prev =>
+      prev.map(task =>
+        task.id === id? {...task, completed: !task.completed} : task
+      )
+    )
+  }
+
   const addTask = (title: string) => {
     const newTask: Task = {
       id: Date.now(),
@@ -32,7 +44,7 @@ export const App = () => {
     <main className={styles.main}>
       <Header></Header>
       <AddTaskForm addTask={addTask}></AddTaskForm>
-      <TaskList tasks={tasks}></TaskList>
+      <TaskList tasks={tasks} deleteTask={deleteTask} toggleComplete={toggleComplete}></TaskList>
     </main>
   );
 };
