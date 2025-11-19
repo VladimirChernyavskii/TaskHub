@@ -28,7 +28,8 @@ export const TaskItem = ({
           <Button
             title='Выполнить'
             type='success'
-            onClick={() => onToggleComplete?.()}></Button>
+            onClick={() => onToggleComplete?.()}
+          />
         )}
         <Button title='Удалить' type='clear' onClick={onDelete} />
       </div>
