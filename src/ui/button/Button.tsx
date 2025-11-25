@@ -22,15 +22,13 @@ export const Button = ({
 }: ButtonProps) => {
   return (
     <button
-      className={clsx(
-        styles.button,
-        styles[`button-${type}`],
-        { [styles.active]: active }
-      )}
+      className={clsx(styles.button, styles[`button-${type}`], {
+        [styles.active]: active,
+      })}
       type={htmlType}
       onClick={onClick}>
-        {title && <Text weight={800}> {title}</Text>}
-        {icon }
+      {title && <Text weight={800}> {title}</Text>}
+      {icon}
     </button>
   );
 };

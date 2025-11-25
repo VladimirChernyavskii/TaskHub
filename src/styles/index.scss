@@ -92,9 +92,11 @@ body {
   margin: 0;
   background-color: var(--bg-color);
   color: var(--text-color);
+  min-height: 100vh;
   font-family: 'Open Sans', sans-serif;
   font-size: 18px; // базовый размер текста
   line-height: 1.5;
+  transition: all 0.5s linear;
 }
 
 *,

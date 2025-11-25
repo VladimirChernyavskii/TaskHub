@@ -1,11 +1,12 @@
 .button {
   display: flex;
+  height: 50px;
+
+  // width: 200px;
+  padding: 0 20px;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  //width: 200px;
-  padding: 0 20px;
-  height: 50px;
   flex-shrink: 0;
   text-align: center;
   border: 1px solid #000;
@@ -66,7 +67,7 @@
   background-color: var(--bg-color);
 
   &:hover {
-    filter: none; 
+    filter: none;
     cursor: default;
   }
 }

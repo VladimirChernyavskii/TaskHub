@@ -25,11 +25,21 @@ export const TaskItem = ({
       </Text>
       <div className={styles.actions}>
         <Button
-          icon={completed ? <CornerUpLeft size={30} color="black" /> : <Check size={30} color="black" />}
+          icon={
+            completed ? (
+              <CornerUpLeft size={30} color='black' />
+            ) : (
+              <Check size={30} color='black' />
+            )
+          }
           type={completed ? 'secondary' : 'success'}
           onClick={() => onToggleComplete?.()}
         />
-        <Button icon={<Trash size={30} color="black" />} type='clear' onClick={onDelete} />
+        <Button
+          icon={<Trash size={30} color='black' />}
+          type='clear'
+          onClick={onDelete}
+        />
       </div>
     </article>
   );

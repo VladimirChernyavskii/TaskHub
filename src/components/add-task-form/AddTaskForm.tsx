@@ -29,7 +29,10 @@ export const AddTaskForm = ({
         label='Введите задачу'
         value={value}
         onChange={(e) => setValue(e.target.value)}></Input>
-      <Button icon={<Plus size={30} color="black" />} type='apply' htmlType='submit'></Button>
+      <Button
+        icon={<Plus size={30} color='black' />}
+        type='apply'
+        htmlType='submit'></Button>
     </form>
   );
 };
