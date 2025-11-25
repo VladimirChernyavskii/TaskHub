@@ -19,7 +19,7 @@ export const TaskList = ({
 
   return (
     <>
-      <FilterPanel filterChange={setFilter}></FilterPanel>
+      <FilterPanel filterChange={setFilter} filter={filter}></FilterPanel>
       <section className={styles.list}>
         {tasks
           .filter((task) => {

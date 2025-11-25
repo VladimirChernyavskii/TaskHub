@@ -27,7 +27,7 @@ type TextProps = {
 export const Text = ({
   children,
   as: Tag = 'div',
-  size = 18,
+  size = 22,
   dynamic = true,
   weight = 400,
   fontStyle = 'normal',

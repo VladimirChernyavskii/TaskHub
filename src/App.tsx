@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from './components/header/Header';
 import { AddTaskForm } from './components/add-task-form/AddTaskForm';
 import { TaskList } from './components/task-list/TaskList';
@@ -12,33 +12,48 @@ export interface Task {
 }
 
 export const App = () => {
-  const [tasks, setTasks] = useState<Task[]>([
-    { id: 1, text: 'Купить хлеб', completed: false },
-    { id: 2, text: 'Сделать дз', completed: true },
-    { id: 3, text: 'Позвонить другу', completed: false },
-    { id: 4, text: 'Помыть попу', completed: false },
-  ]);
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  useEffect(() =>{
+    fetch('https://render-production-644d.up.railway.app/tasks')
+    .then(res => res.json())
+    .then(data => setTasks(data))
+  }, [])
 
   const deleteTask = (id: number) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id));
+    fetch(`https://render-production-644d.up.railway.app/tasks/${id}`,{
+      method: 'DELETE',
+    })
+    .then(() =>{
+      setTasks(prev => prev!.filter(task => task.id !== id))
+    })
   };
 
   const toggleComplete = (id: number) => {
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
+    const task = tasks.find(t => t.id === id);
+    if (!task) return;
+
+    fetch(`https://render-production-644d.up.railway.app/tasks/${id}`,{
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({completed: !task.completed})
+    })
+    .then(res => res.json())
+    .then(updatedTask => {
+      setTasks(prev =>
+        prev!.map(t => (t.id === id ? updatedTask : t))
+      );
+    });
   };
 
   const addTask = (title: string) => {
-    const newTask: Task = {
-      id: Date.now(),
-      text: title,
-      completed: false,
-    };
-
-    setTasks((prev) => [...prev, newTask]);
+    fetch('https://render-production-644d.up.railway.app/tasks',{
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: title, completed: false })
+    })
+    .then(res => res.json())
+    .then(newTask => setTasks(prev => [...prev, newTask]));
   };
   return (
     <main className={styles.main}>

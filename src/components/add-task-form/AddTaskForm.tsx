@@ -2,6 +2,7 @@ import styles from './AddTaskForm.module.scss';
 import { Button } from 'src/ui/button/Button';
 import { Input } from 'src/ui/input/Input';
 import { useState } from 'react';
+import { Plus } from 'lucide-react';
 
 export const AddTaskForm = ({
   addTask,
@@ -28,7 +29,7 @@ export const AddTaskForm = ({
         label='Введите задачу'
         value={value}
         onChange={(e) => setValue(e.target.value)}></Input>
-      <Button title='Добавить задачу' type='apply' htmlType='submit'></Button>
+      <Button icon={<Plus size={30} color="black" />} type='apply' htmlType='submit'></Button>
     </form>
   );
 };

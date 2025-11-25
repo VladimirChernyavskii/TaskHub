@@ -1,6 +1,6 @@
 import { Text } from 'src/ui/text/Text';
 import { Button } from 'src/ui/button/Button';
-
+import { Trash, Check, CornerUpLeft } from 'lucide-react';
 import styles from './TaskItem.module.scss';
 
 type TaskItemProps = {
@@ -24,14 +24,12 @@ export const TaskItem = ({
         {text}
       </Text>
       <div className={styles.actions}>
-        {!completed && (
-          <Button
-            title='Выполнить'
-            type='success'
-            onClick={() => onToggleComplete?.()}
-          />
-        )}
-        <Button title='Удалить' type='clear' onClick={onDelete} />
+        <Button
+          icon={completed ? <CornerUpLeft size={30} color="black" /> : <Check size={30} color="black" />}
+          type={completed ? 'secondary' : 'success'}
+          onClick={() => onToggleComplete?.()}
+        />
+        <Button icon={<Trash size={30} color="black" />} type='clear' onClick={onDelete} />
       </div>
     </article>
   );
