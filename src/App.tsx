@@ -14,15 +14,29 @@ export interface Task {
 export const App = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     document.body.setAttribute('data-theme', theme);
   }, [theme]);
-  
+
   useEffect(() => {
-    fetch('https://render-production-644d.up.railway.app/tasks')
-      .then((res) => res.json())
-      .then((data) => setTasks(data));
+    const loadTasks = async () =>{
+      try{
+        const res = await fetch('https://render-production-644d.up.railway.app/tasks')
+        
+        if (!res.ok) {
+          throw new Error("Сервер вернул ошибку");
+        }
+        const data = await res.json();
+        setTasks(data)
+      }
+      catch{
+        setError("Не удалось загрузить задачи. Проверь, запущена ли база данных.");
+      }
+    }
+    
+    loadTasks();
   }, []);
 
   const toggleTheme = () => {
@@ -64,12 +78,18 @@ export const App = () => {
   return (
     <main className={styles.main} data-theme={theme}>
       <Header toggleTheme={toggleTheme} currentTheme={theme} />
-      <AddTaskForm addTask={addTask}/>
+      <AddTaskForm addTask={addTask} />
       <TaskList
         tasks={tasks}
         deleteTask={deleteTask}
         toggleComplete={toggleComplete}
       />
+
+      {error && (
+        <div style={{ color: "red", fontWeight: 700 }}>
+          {error}
+        </div>
+      )}
     </main>
   );
 };

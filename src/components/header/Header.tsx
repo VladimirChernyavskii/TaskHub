@@ -22,7 +22,7 @@ export const Header = ({ toggleTheme, currentTheme }: HeaderProps) => {
             <Sun size={30} color='black' />
           )
         }
-        type="secondary"
+        type='secondary'
         onClick={toggleTheme}
       />
     </div>
