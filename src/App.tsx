@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Header } from './components/header/Header';
 import { AddTaskForm } from './components/add-task-form/AddTaskForm';
 import { TaskList } from './components/task-list/TaskList';
-
 import styles from './styles/index.module.scss';
+import { tasksApi } from './api/tasksApi';
 
 export interface Task {
   id: number;
@@ -26,14 +26,7 @@ export const App = () => {
   useEffect(() => {
     const loadTasks = async () => {
       try {
-        const res = await fetch(
-          'https://render-production-644d.up.railway.app/tasks'
-        );
-
-        if (!res.ok) {
-          throw new Error('Сервер вернул ошибку');
-        }
-        const data = await res.json();
+        const data = await tasksApi.getAll();
         setTasks(data);
       } catch {
         setError(
@@ -49,37 +42,25 @@ export const App = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
-  const deleteTask = (id: number) => {
-    fetch(`https://render-production-644d.up.railway.app/tasks/${id}`, {
-      method: 'DELETE',
-    }).then(() => {
-      setTasks((prev) => prev!.filter((task) => task.id !== id));
-    });
+  const deleteTask = async (id: number) => {
+    await tasksApi.delete(id);
+    setTasks((prev) => prev!.filter((task) => task.id !== id));
   };
 
-  const toggleComplete = (id: number) => {
+  const toggleComplete = async (id: number) => {
     const task = tasks.find((t) => t.id === id);
     if (!task) return;
 
-    fetch(`https://render-production-644d.up.railway.app/tasks/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ completed: !task.completed }),
-    })
-      .then((res) => res.json())
-      .then((updatedTask) => {
-        setTasks((prev) => prev!.map((t) => (t.id === id ? updatedTask : t)));
-      });
+    const updated = await tasksApi.toggle(id, !task.completed)
+    
+    setTasks((prev) =>
+      prev.map((t) => (t.id === id ? updated : t))
+    );
   };
 
-  const addTask = (title: string) => {
-    fetch('https://render-production-644d.up.railway.app/tasks', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: title, completed: false }),
-    })
-      .then((res) => res.json())
-      .then((newTask) => setTasks((prev) => [...prev, newTask]));
+  const addTask = async (title: string) => {
+    const newTask = await tasksApi.create(title);
+    setTasks((prev) => [...prev, newTask]);
   };
   return (
     <main className={styles.main} data-theme={theme}>
