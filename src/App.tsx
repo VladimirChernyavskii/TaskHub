@@ -51,11 +51,9 @@ export const App = () => {
     const task = tasks.find((t) => t.id === id);
     if (!task) return;
 
-    const updated = await tasksApi.toggle(id, !task.completed)
-    
-    setTasks((prev) =>
-      prev.map((t) => (t.id === id ? updated : t))
-    );
+    const updated = await tasksApi.toggle(id, !task.completed);
+
+    setTasks((prev) => prev.map((t) => (t.id === id ? updated : t)));
   };
 
   const addTask = async (title: string) => {
