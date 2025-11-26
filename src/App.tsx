@@ -13,29 +13,35 @@ export interface Task {
 
 export const App = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    return (localStorage.getItem('theme') as 'light' | 'dark') || 'light';
+  });
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     document.body.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
   useEffect(() => {
-    const loadTasks = async () =>{
-      try{
-        const res = await fetch('https://render-production-644d.up.railway.app/tasks')
-        
+    const loadTasks = async () => {
+      try {
+        const res = await fetch(
+          'https://render-production-644d.up.railway.app/tasks'
+        );
+
         if (!res.ok) {
-          throw new Error("Сервер вернул ошибку");
+          throw new Error('Сервер вернул ошибку');
         }
         const data = await res.json();
-        setTasks(data)
+        setTasks(data);
+      } catch {
+        setError(
+          'Не удалось загрузить задачи. Проверь, запущена ли база данных.'
+        );
       }
-      catch{
-        setError("Не удалось загрузить задачи. Проверь, запущена ли база данных.");
-      }
-    }
-    
+    };
+
     loadTasks();
   }, []);
 
@@ -85,11 +91,7 @@ export const App = () => {
         toggleComplete={toggleComplete}
       />
 
-      {error && (
-        <div style={{ color: "red", fontWeight: 700 }}>
-          {error}
-        </div>
-      )}
+      {error && <div style={{ color: 'red', fontWeight: 700 }}>{error}</div>}
     </main>
   );
 };
