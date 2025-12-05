@@ -4,6 +4,8 @@ import styles from './TaskList.module.scss';
 import { Task } from '../../App';
 import { FilterPanel } from '../filter-panel/FilterPanel';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFilter,selectFilter } from 'src/store/filterSlice';
 
 type TaskListProps = {
   tasks: Task[];
@@ -16,20 +18,12 @@ export const TaskList = ({
   deleteTask,
   toggleComplete,
 }: TaskListProps) => {
-  const [filter, setFilter] = useState<'all' | 'active' | 'completed'>(() => {
-    return (
-      (localStorage.getItem('filter') as 'all' | 'active' | 'completed') ||
-      'all'
-    );
-  });
-
-  useEffect(() => {
-    localStorage.setItem('filter', filter);
-  }, [filter]);
+  const filter = useSelector(selectFilter);
+  const dispatch = useDispatch();
 
   return (
     <>
-      <FilterPanel filterChange={setFilter} filter={filter}></FilterPanel>
+      <FilterPanel filterChange={(value) => dispatch(setFilter(value))} filter={filter}></FilterPanel>
       <section className={styles.list}>
         <AnimatePresence initial={false}>
           {tasks
