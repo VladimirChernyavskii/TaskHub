@@ -1,4 +1,4 @@
-import { Task } from '../App';
+import { Task } from '../pages/HomePage';
 
 const BASE_URL = 'https://render-production-644d.up.railway.app/tasks';
 

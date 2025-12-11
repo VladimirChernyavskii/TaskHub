@@ -1,29 +1,30 @@
-import { useState, useEffect } from 'react';
 import { TaskItem } from '../task-item/TaskItem';
 import styles from './TaskList.module.scss';
-import { Task } from '../../App';
+import { Task } from '../../pages/HomePage';
 import { FilterPanel } from '../filter-panel/FilterPanel';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useSelector, useDispatch } from 'react-redux';
-import { setFilter,selectFilter } from 'src/store/filterSlice';
 
 type TaskListProps = {
   tasks: Task[];
   deleteTask: (id: number) => void;
   toggleComplete: (id: number) => void;
+  filter: 'all' | 'active' | 'completed';
+  onFilterChange: (filter: 'all' | 'active' | 'completed') => void;
 };
 
 export const TaskList = ({
   tasks,
   deleteTask,
   toggleComplete,
+  filter,
+  onFilterChange,
 }: TaskListProps) => {
-  const filter = useSelector(selectFilter);
-  const dispatch = useDispatch();
-
   return (
     <>
-      <FilterPanel filterChange={(value) => dispatch(setFilter(value))} filter={filter}></FilterPanel>
+      <FilterPanel
+        filterChange={onFilterChange}
+        filter={filter}>
+      </FilterPanel>
       <section className={styles.list}>
         <AnimatePresence initial={false}>
           {tasks
