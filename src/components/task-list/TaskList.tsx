@@ -21,10 +21,7 @@ export const TaskList = ({
 }: TaskListProps) => {
   return (
     <>
-      <FilterPanel
-        filterChange={onFilterChange}
-        filter={filter}>
-      </FilterPanel>
+      <FilterPanel filterChange={onFilterChange} filter={filter}></FilterPanel>
       <section className={styles.list}>
         <AnimatePresence initial={false}>
           {tasks

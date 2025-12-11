@@ -32,7 +32,6 @@ export const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const filter = searchParams.get('filter') || 'all'; // если нет — по умолчанию all
 
-
   useEffect(() => {
     dispatch(fetchTasks());
   }, [dispatch]);
@@ -43,20 +42,20 @@ export const HomePage = () => {
 
   return (
     <main className={styles.main} data-theme={theme}>
-        <Header
-            toggleTheme={() => dispatch(toggleTheme())}
-            currentTheme={theme}
-        />
-        <AddTaskForm addTask={(title) => dispatch(addTaskThunk(title))} />
-        <TaskList
-            tasks={tasks}
-            deleteTask={(id) => dispatch(deleteTaskThunk(id))}
-            toggleComplete={(id) => dispatch(toggleTaskThunk(id))}
-            filter={filter as 'all' | 'active' | 'completed'}
-            onFilterChange={(newFilter) => setSearchParams({ filter: newFilter })}
-        />
+      <Header
+        toggleTheme={() => dispatch(toggleTheme())}
+        currentTheme={theme}
+      />
+      <AddTaskForm addTask={(title) => dispatch(addTaskThunk(title))} />
+      <TaskList
+        tasks={tasks}
+        deleteTask={(id) => dispatch(deleteTaskThunk(id))}
+        toggleComplete={(id) => dispatch(toggleTaskThunk(id))}
+        filter={filter as 'all' | 'active' | 'completed'}
+        onFilterChange={(newFilter) => setSearchParams({ filter: newFilter })}
+      />
 
-        {error && <div style={{ color: 'red', fontWeight: 700 }}>{error}</div>}
+      {error && <div style={{ color: 'red', fontWeight: 700 }}>{error}</div>}
     </main>
   );
 };
