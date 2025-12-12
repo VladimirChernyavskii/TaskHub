@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { Header } from '../components/header/Header';
-import { AddTaskForm } from '../components/add-task-form/AddTaskForm';
-import { TaskList } from '../components/task-list/TaskList';
-import styles from '../styles/index.module.scss';
+import { Header } from '../../components/header/Header';
+import { AddTaskForm } from '../../components/add-task-form/AddTaskForm';
+import { TaskList } from '../../components/task-list/TaskList';
+import styles from '../../styles/index.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import { AppDispatch } from '../store/store';
+import { AppDispatch } from '../../store/store';
 import {
   fetchTasks,
   addTaskThunk,
@@ -13,14 +13,8 @@ import {
   toggleTaskThunk,
   selectTasks,
   selectError,
-} from '../store/tasksSlice';
-import { toggleTheme, selectTheme } from '../store/themeSlice';
-
-export interface Task {
-  id: number;
-  text: string;
-  completed: boolean;
-}
+} from '../../store/tasksSlice';
+import { toggleTheme, selectTheme } from '../../store/themeSlice';
 
 export const HomePage = () => {
   const dispatch = useDispatch<AppDispatch>();

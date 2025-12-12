@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { tasksApi } from '../api/tasksApi';
-import { Task } from '../pages/HomePage';
+import { Task } from '../models';
 import { RootState } from './store';
 
 export const fetchTasks = createAsyncThunk<Task[]>(

@@ -1,6 +1,6 @@
 import { TaskItem } from '../task-item/TaskItem';
 import styles from './TaskList.module.scss';
-import { Task } from '../../pages/HomePage';
+import { Task } from '../../models';
 import { FilterPanel } from '../filter-panel/FilterPanel';
 import { AnimatePresence, motion } from 'framer-motion';
 
