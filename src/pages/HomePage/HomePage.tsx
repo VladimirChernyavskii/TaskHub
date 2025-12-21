@@ -8,11 +8,12 @@ import { useTasksStore } from 'src/store/tasks.store';
 import { useThemeStore } from '../../store/theme.store';
 
 export const HomePage = () => {
-  const {tasks, error, loading, fetchTasks, addTask, deleteTask, toggleTask} = useTasksStore();
-  const {theme, toggleTheme} = useThemeStore();
-  
+  const { tasks, error, fetchTasks, addTask, deleteTask, toggleTask } =
+    useTasksStore();
+  const { theme, toggleTheme } = useThemeStore();
+
   const [searchParams, setSearchParams] = useSearchParams();
-  const filter = searchParams.get('filter') || 'all'; 
+  const filter = searchParams.get('filter') || 'all';
 
   useEffect(() => {
     fetchTasks();
@@ -24,10 +25,7 @@ export const HomePage = () => {
 
   return (
     <main className={styles.main} data-theme={theme}>
-      <Header
-        toggleTheme={() => toggleTheme()}
-        currentTheme={theme}
-      />
+      <Header toggleTheme={() => toggleTheme()} currentTheme={theme} />
       <AddTaskForm addTask={(title) => addTask(title)} />
       <TaskList
         tasks={tasks}
