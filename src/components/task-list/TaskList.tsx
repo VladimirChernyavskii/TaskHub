@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 type TaskListProps = {
   tasks: Task[];
   deleteTask: (id: number) => void;
-  toggleComplete: (id: number) => void;
+  toggleComplete: (task: Task) => void;
   filter: 'all' | 'active' | 'completed';
   onFilterChange: (filter: 'all' | 'active' | 'completed') => void;
 };
@@ -43,7 +43,7 @@ export const TaskList = ({
                   text={task.text}
                   completed={task.completed}
                   onDelete={() => deleteTask(task.id)}
-                  onToggleComplete={() => toggleComplete(task.id)}
+                  onToggleComplete={() => toggleComplete(task)}
                 />
               </motion.div>
             ))}

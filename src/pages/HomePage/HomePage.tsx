@@ -4,20 +4,15 @@ import { AddTaskForm } from '../../components/add-task-form/AddTaskForm';
 import { TaskList } from '../../components/task-list/TaskList';
 import styles from '../../styles/index.module.scss';
 import { useSearchParams } from 'react-router-dom';
-import { useTasksStore } from 'src/store/tasks.store';
+import { useTasks } from 'src/hooks/useTasks'; 
 import { useThemeStore } from '../../store/theme.store';
 
 export const HomePage = () => {
-  const { tasks, error, fetchTasks, addTask, deleteTask, toggleTask } =
-    useTasksStore();
+  const { tasksQuery, addTask, deleteTask, toggleTask } = useTasks();
   const { theme, toggleTheme } = useThemeStore();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const filter = searchParams.get('filter') || 'all';
-
-  useEffect(() => {
-    fetchTasks();
-  }, []);
 
   useEffect(() => {
     document.body.setAttribute('data-theme', theme);
@@ -26,16 +21,16 @@ export const HomePage = () => {
   return (
     <main className={styles.main} data-theme={theme}>
       <Header toggleTheme={() => toggleTheme()} currentTheme={theme} />
-      <AddTaskForm addTask={(title) => addTask(title)} />
+      <AddTaskForm addTask={(title) => addTask.mutate(title)} />
       <TaskList
-        tasks={tasks}
-        deleteTask={(id) => deleteTask(id)}
-        toggleComplete={(id) => toggleTask(id)}
+        tasks={tasksQuery.data || []}
+        deleteTask={(id) => deleteTask.mutate(id)}
+        toggleComplete={(task) => toggleTask.mutate(task)}
         filter={filter as 'all' | 'active' | 'completed'}
         onFilterChange={(newFilter) => setSearchParams({ filter: newFilter })}
       />
 
-      {error && <div style={{ color: 'red', fontWeight: 700 }}>{error}</div>}
+      {tasksQuery.error && <div style={{ color: 'red', fontWeight: 700 }}>{tasksQuery.error?.message}</div>}
     </main>
   );
 };

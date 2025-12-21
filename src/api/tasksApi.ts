@@ -14,7 +14,7 @@ export const tasksApi = {
     if (!res.ok) throw new Error('Ошибка при удалении задачи');
   },
 
-  async toggle(id: number, completed: boolean): Promise<Task> {
+  async toggle({id,completed}:{id: number, completed: boolean}): Promise<Task> {
     const res = await fetch(`${BASE_URL}/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
