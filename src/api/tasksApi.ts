@@ -1,6 +1,6 @@
 import { Task } from '../models';
 
-const BASE_URL = process.env.REACT_APP_API_URL + "/tasks";;
+const BASE_URL = process.env.REACT_APP_API_URL + '/tasks';
 
 export const tasksApi = {
   async getAll(): Promise<Task[]> {

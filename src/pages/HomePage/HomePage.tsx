@@ -3,32 +3,20 @@ import { Header } from '../../components/header/Header';
 import { AddTaskForm } from '../../components/add-task-form/AddTaskForm';
 import { TaskList } from '../../components/task-list/TaskList';
 import styles from '../../styles/index.module.scss';
-import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import { AppDispatch } from '../../store/store';
-import {
-  fetchTasks,
-  addTaskThunk,
-  deleteTaskThunk,
-  toggleTaskThunk,
-  selectTasks,
-  selectError,
-} from '../../store/tasksSlice';
-import { toggleTheme, selectTheme } from '../../store/themeSlice';
+import { useTasksStore } from 'src/store/tasks.store';
+import { useThemeStore } from '../../store/theme.store';
 
 export const HomePage = () => {
-  const dispatch = useDispatch<AppDispatch>();
-
-  const tasks = useSelector(selectTasks);
-  const theme = useSelector(selectTheme);
-  const error = useSelector(selectError);
-
+  const {tasks, error, loading, fetchTasks, addTask, deleteTask, toggleTask} = useTasksStore();
+  const {theme, toggleTheme} = useThemeStore();
+  
   const [searchParams, setSearchParams] = useSearchParams();
-  const filter = searchParams.get('filter') || 'all'; // если нет — по умолчанию all
+  const filter = searchParams.get('filter') || 'all'; 
 
   useEffect(() => {
-    dispatch(fetchTasks());
-  }, [dispatch]);
+    fetchTasks();
+  }, []);
 
   useEffect(() => {
     document.body.setAttribute('data-theme', theme);
@@ -37,14 +25,14 @@ export const HomePage = () => {
   return (
     <main className={styles.main} data-theme={theme}>
       <Header
-        toggleTheme={() => dispatch(toggleTheme())}
+        toggleTheme={() => toggleTheme()}
         currentTheme={theme}
       />
-      <AddTaskForm addTask={(title) => dispatch(addTaskThunk(title))} />
+      <AddTaskForm addTask={(title) => addTask(title)} />
       <TaskList
         tasks={tasks}
-        deleteTask={(id) => dispatch(deleteTaskThunk(id))}
-        toggleComplete={(id) => dispatch(toggleTaskThunk(id))}
+        deleteTask={(id) => deleteTask(id)}
+        toggleComplete={(id) => toggleTask(id)}
         filter={filter as 'all' | 'active' | 'completed'}
         onFilterChange={(newFilter) => setSearchParams({ filter: newFilter })}
       />
